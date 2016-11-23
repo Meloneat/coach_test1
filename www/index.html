@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <!--<script src="cordova.js"></script>-->
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/getscript?v=2.0&ak=X12FhmpSd4YLgS9j5qOA3mDymYg2xBGl"></script>
+  </head>
+  <body ng-app="starter">
+
+    <ion-pane>
+      <ion-header-bar class="bar-stable">
+        <h1 class="title">where am xu</h1>
+      </ion-header-bar>
+      <ion-content>
+        <div>hello</div>
+        <div id="container">
+
+        </div>
+        <!--<script src="js/map.js"></script>-->
+        <script style="text/javascript">
+          var map = new BMap.Map("container");
+          var point = new BMap.Point(119.009, 30.900);//定位
+          var my_location = new BMap.Geolocation()
+          var marker = new BMap.Marker(point);        // 创建标注
+          /*  我会设置：
+           No1:一个按钮显示我的方位
+           No2：缩进的按钮
+           No3: 本人胡旭的位置
+           No4：一个可输入文本框，可找寻饭馆
+           */
+          var navopt = [{type:BMAP_NAVIGATION_CONTROL_LARGE},{type:BMAP_NAVIGATION_CONTROL_SMALL}
+            ,{type:BMAP_NAVIGATION_CONTROL_PAN},{type:BMAP_NAVIGATION_CONTROL_ZOOM}]
+          //信息窗口参数
+          //信息窗口参数
+          var infopt = {
+            width : 250,     // 信息窗口宽度
+            height: 100,     // 信息窗口高度
+            title : "Hello"  // 信息窗口标题
+          }
+          var infoWindow = new BMap.InfoWindow("World", infopt);  // 创建信息窗口对象
+
+          //alert("nihao");
+          // context
+          map.centerAndZoom(point,9);
+          map.addControl(new BMap.OverviewMapControl());          //缩略地图控件
+          map.addControl(new BMap.NavigationControl(navopt[0]));  //地图平移缩放控件
+          /* 发现一个问题，地图平移缩放空间用不了 */
+
+          map.addControl(new BMap.GeolocationControl());          //定位控件,针对移动端
+          map.addOverlay(marker);                               // 将标注添加到地图中
+          map.openInfoWindow(infoWindow,point);      // 将信息窗口添加到地图中
+
+        </script>
+      </ion-content>
+    </ion-pane>
+  </body>
+
+
+</html>
